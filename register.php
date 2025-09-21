@@ -1,5 +1,6 @@
 <?php
 include 'connection.php';
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -10,15 +11,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ss", $username, $password);
 
     if ($stmt->execute()) {
-        echo "Registration successful!";
-        header("Location: login.php");
+        $_SESSION['username'] = $username;
+        header("Location: details.php");
         exit;
     } else {
         echo "Error: " . $stmt->error;
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
